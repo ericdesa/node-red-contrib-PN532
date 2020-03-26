@@ -40,19 +40,12 @@ module.exports = function(RED) {
 
         node.child.stdout.on('data', function (data) {
             console.log(data);
-                var pattern = new RegExp("^\\d{12}$");
-
                 clearTimeout(statustimeoutfunction);
                 data = data.toString().trim();
 
                 if (data.length > 0) {
                     if (node.running) {
-                        if (data.match(pattern)){
-                            node.send({ payload:(data) });
-                        }
-                        else{
-                            RED.log.warn("Card Error - " + data)
-                        }
+                        node.send({ payload:(data) });
                     }
 
                     node.status({fill:"green",shape:"dot",text:data});
